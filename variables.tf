@@ -37,12 +37,6 @@ variable "repo_description" {
   default     = "Managed by Terraform"
 }
 
-variable "repo_visibility" {
-  type        = string
-  description = "Repository visibility ('private' or 'internal')."
-  default     = "private"
-}
-
 variable "create_develop_branch" {
   type        = bool
   description = "Whether to create and protect the develop branch."

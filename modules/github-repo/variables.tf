@@ -20,7 +20,7 @@ variable "visibility" {
   default     = "private"
 
   validation {
-    condition     = contains(["private", "internal"], var.visibility)
+    condition     = contains(["private", "internal", "public"], var.visibility)
     error_message = "Repository visibility must be 'private' or 'internal' to comply with enterprise repository creation and visibility policies."
   }
 }
