@@ -1,0 +1,43 @@
+name: Terraform Github Repo Management
+
+on:
+  push:
+    branches-ignore: [ main ]      # Plan runs on any branch
+  pull_request:
+    branches: [ main ]             # Plan also runs on PR
+  workflow_dispatch:               # Optional manual trigger
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    env:
+      # Azure authentication
+    #   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+    #   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+    #   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+    #   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      
+      # GitHub App authentication
+      TF_VAR_github_app_id: ${{ secrets.TF_APP_ID }}
+      TF_VAR_github_installation_id: ${{ secrets.TF_INSTALLATION_ID }}
+      TF_VAR_github_app_private_key: ${{ secrets.TF_APP_PRIVATE_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Plan
+        if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+        run: terraform plan -var-file="configurations.tfvars" -input=false
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -var-file="configurations.tfvars" -input=false -auto-approve

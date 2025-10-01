@@ -1,20 +1,19 @@
 variable "github_app_id" {
-  type        = number
-  description = "GitHub App ID"
-  sensitive   = true  # Masks in Terraform output
-}
-
-variable "github_app_installation_id" {
-  type        = number
-  description = "GitHub App Installation ID"
-  sensitive   = true
-}
-
-variable "github_app_pem_file_path" {
   type        = string
-  description = "Path to the GitHub App private key PEM file"
+  description = "GitHub App ID"
+}
+
+variable "github_installation_id" {
+  type        = string
+  description = "GitHub App Installation ID"
+}
+
+variable "github_app_private_key" {
+  type        = string
+  description = "Content of the GitHub App private key PEM file"
   sensitive   = true
 }
+
 
 variable "github_organization" {
   type        = string

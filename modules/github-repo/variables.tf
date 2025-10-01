@@ -152,3 +152,37 @@ variable "topics" {
   description = "The list of topics for the repository."
   default     = []
 }
+
+variable "allowed_actions" {
+  type        = string
+  description = "Allowed actions policy (all, local_only, selected)"
+  default     = "selected"
+}
+
+variable "patterns_allowed" {
+  type        = list(string)
+  description = "List of allowed action patterns when allowed_actions = selected"
+  default     = [
+  "actions/checkout@*",
+  "hashicorp/setup-terraform@*",
+  "actions/create-github-app-token@*",
+]
+}
+
+variable "github_owned_allowed" {
+  type        = bool
+  description = "Allow all GitHub-owned actions if true"
+  default     = true
+}
+
+variable "verified_allowed" {
+  type        = bool
+  description = "Allow all verified creator actions if true"
+  default     = true
+}
+
+variable enabled_repositories {
+  type        = bool
+  description = "Enable or disable repository creation. Default true to enforce repository creation."
+  default     = true
+}

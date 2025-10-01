@@ -96,8 +96,16 @@ resource "github_branch_protection" "develop" {
   depends_on = [github_branch.develop]
 }
 
-resource "github_actions_repository_permissions" "this" {
-  repository      = github_repository.this.name
-  enabled         = true
-  allowed_actions = "local_only"  # Restricts to local/organization actions, blocking third-party
+resource "github_actions_organization_permissions" "this" {
+  allowed_actions = var.allowed_actions
+  enabled_repositories = var.enabled_repositories
+
+  dynamic "allowed_actions_config" {
+    for_each = var.allowed_actions == "selected" ? [1] : []
+    content {
+      github_owned_allowed = var.github_owned_allowed
+      verified_allowed     = var.verified_allowed
+      patterns_allowed     = var.patterns_allowed
+    }
+  }
 }
