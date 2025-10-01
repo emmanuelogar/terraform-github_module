@@ -14,6 +14,11 @@ variable "github_app_private_key" {
   sensitive   = true
 }
 
+variable "visibility" {
+  type    = string
+  default = "private" # or "public"
+  description = "The repository visibility: private or public"
+}
 
 variable "github_organization" {
   type        = string
