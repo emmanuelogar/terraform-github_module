@@ -181,8 +181,8 @@ variable "verified_allowed" {
   default     = true
 }
 
-variable enabled_repositories {
-  type        = bool
-  description = "Enable or disable repository creation. Default true to enforce repository creation."
-  default     = true
+variable "enabled_repositories" {
+  description = "Which repositories are enabled for GitHub Actions: all, none, or selected"
+  type        = string
+  default     = "all"
 }
