@@ -1,6 +1,13 @@
-# Terraform files to ignore
+# Ignore terraform state files
 *.tfstate
 *.tfstate.*
+
+# Ignore ALL tfvars files except configurations.tfvars
 *.tfvars
+!configurations.tfvars
+
+# Ignore Terraform working directory
 .terraform/
+
+# Ignore lock file (can be regenerated)
 .terraform.lock.hcl
